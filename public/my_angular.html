@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script/angular.min.js"></script>
+    <script>
+        var module=angular.module("mymodule",[]);
+        module.controller("mycontroller",function($scope)
+        {
+            $scope.firstname="Gabbar singh";
+            $scope.lastname="";
+            $scope.fullname;
+            $scope.cpp;
+            $scope.java;
+            $scope.web;
+            $scope.sum;
+            $scope.per;
+            $scope.res;
+            $scope.errcpp;
+            $scope.errjava;
+            $scope.errweb;
+
+            $scope.doHello=function()
+            {
+                alert("hello "+$scope.fullname);
+            }
+            $scope.doConcat=function()
+            {
+                $scope.fullname=$scope.firstname+" "+$scope.lastname;
+            }
+            $scope.doChk=function(marks)
+            {
+                // alert("dochk function");
+                if($scope.marks=="")
+                {
+                    $scope.errcpp="fill above value";
+                    $scope.errjava="fill above value";
+                    $scope.errweb="fill above value";
+                }
+                else if($scope.marks>100)
+                {
+                    $scope.errcpp="fill value <=100";
+                    $scope.errjava="fill value <=100";
+                    $scope.errweb="fill value <=100";
+                }
+                // else if(isNaN($scope.marks))
+                // {
+                //     $scope.errcpp="fill numeric value";
+                //     $scope.errjava="fill numeric value";
+                //     $scope.errweb="fill numeric value";
+                // }
+                else {
+                    $scope.sum=parseFloat($scope.cpp)+parseFloat($scope.java)+parseFloat($scope.web);
+                }
+            }
+            $scope.doTotal=function()
+            {
+                $scope.sum=parseFloat($scope.cpp)+parseFloat($scope.java)+parseFloat($scope.web);
+            }
+            $scope.doPer=function()
+            {
+                alert("doPer function");
+                $scope.per=($scope.sum)*100/300;
+            }
+            $scope.doRes=function()
+            {
+                alert("doRes function");
+                if($scope.per<50)
+                $scope.res="fail";
+                else $scope.res="pass";
+            }
+        })
+    </script>
+</head>
+<body ng-app="mymodule" ng-controller="mycontroller">
+    <center>
+    <input type="text" ng-model="firstname">
+    <input type="text" ng-model="lastname">
+    <p>
+    {{fullname}}
+</p>
+    <input type="button" value="say hello" ng-click="doHello();">
+    <input type="button" value="join" ng-click="doConcat();">
+<br><br>
+    cpp&nbsp;<input type="text" ng-model="cpp" ng-blur="doChk(cpp);">
+    <p>
+        {{errcpp}}
+    </p>
+    <br><br>
+    Java&nbsp;<input type="text" ng-model="java" ng-blur="doChk(java);">
+    <p>
+        {{errjava}}
+    </p>
+    <br><br>
+    Web&nbsp;<input type="text" ng-model="web" ng-blur="doChk(web);">
+    <p>
+        {{errweb}}
+    </p>
+    <br><br>
+    <input type="button" value="total">&nbsp;<input type="text" ng-model="sum" ng-click="doTotal();">
+    <br><br>
+    <p>
+        {{sum}}
+    </p>
+    <input type="button" value="Per">&nbsp;<input type="text" ng-model="per" ng-click="doPer();">
+    <br><br>
+    <p>
+        {{per}}
+    </p>
+    <input type="button" value="result">&nbsp;<input type="text" ng-model="res" ng-click="doRes();">
+    <p>
+        {{res}}
+    </p>
+    </center>
+</body>
+</html>

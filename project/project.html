@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+        function doPrev(refFile, prevImg) {
+            const [file] = refFile.files
+            if (file) {
+                prevImg.src = URL.createObjectURL(file)
+            }
+        }
+        $(document).ready(function()
+        {
+            doSearch();
+            $("#btnSearch").click(doSearch);
+
+            function doSearch()
+            {
+                var emailku=$("#emailId").val();
+                var obj={
+                    type:"get",
+                    url:"/get-json-details",
+                    data:{
+                        kuchEmail:emailku
+                    }
+                }
+                $.ajax(obj).done(function(respJSONKuch)
+                {
+                    alert(JSON.stringify(respJSONKuch));
+                    $("#Name").val(respJSONKuch[0].name);
+                    $("#Mobile").val(respJSONKuch[0].contact);
+                    $("#Address").val(respJSONKuch[0].address);
+                    $("#city").val(respJSONKuch[0].city);
+                    $("#date").val(respJSONKuch[0].dob);
+                    $("#gender").val(respJSONKuch[0].gender);
+                    $("#proof").val(respJSONKuch[0].id);
+                    // $("#idpic").val(respJSONKuch[0].idpicname);
+                    $("#imgPrev").prop("src","project/uploads/"+respJSONKuch[0].idpicname);
+                    $("#hdn").val(respJSONKuch[0].idpicname);
+                }).fail(function(err)
+                {
+                    alert(err);
+                })
+            }
+            //================================
+            // $("#btnUpdate").click(function()
+            // {
+            //     var emailku=$("#emailId").val();
+            //     var Nameku=$("#Name").val();
+            //     var Mobileku=$("#Mobile").val();
+            //     var Addressku=$("#Address").val();
+            //     var Cityku=$("#city").val();
+            //     var Dateku=$("#date").val();
+            //     var Genderku=$("#gender").val();
+            //     var Proofku=$("#proof").val();
+            //     var obj={
+            //         type:"get",
+            //         url:"/update-json-details",
+            //         data:{
+            //             kuchEmail:emailku,
+            //             kuchName:Nameku,
+            //             kuchMobile:Mobileku,
+            //             kuchAddress:Addressku,
+            //             kuchCity:Cityku,
+            //             kuchDate:Dateku,
+            //             kuchGender:Genderku,
+            //             kuchProof:Proofku
+            //         }
+            //     }
+            //     $.ajax(obj).done(function(respJSONKuch)
+            //     {
+            //         alert(JSON.stringify(respJSONKuch));
+            //     }).fail(function(err)
+            //     {
+            //         alert(err);
+            //     })
+            // })
+        })
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<body>
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" name="hdn" id="hdn">
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-md-12 text-center">
+                    <h1>Profile Form</h1>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-md-12 ">
+                    <label for="emailId" class="form-label">Email address</label>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <input required type="email" class="form-control" value="rbs123@gmail.com" name="txtEmail" id="emailId"
+                        aria-describedby="emailHelp">
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-primary" id="btnSearch">Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label for="Name" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="txtName" id="Name" value="" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="Mobile" class="form-label">Contact Number</label>
+                    <input type="text" class="form-control" name="txtContact" id="Mobile" value="" required>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row mt-2">
+                <div class="col-md-8">
+                    <label for="Address" class="form-label">Address</label>
+                    <input type="text" class="form-control" name="txtAddress" id="Address" value=""
+                        required>
+                </div>
+                <div class="col-md-4">
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" value="" class="form-control" id="city" name="comboCity" list="cities">
+                    <datalist id="cities">
+                        <option value="bti">bti</option>
+                        <option value="chandigarh">chandigarh</option>
+                        <option value="delhi">delhi</option>
+                    </datalist>
+
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label for="date" class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" name="dob" id="date">
+                </div>
+                <div class="col-md-6">
+                    <label for="gender" class="form-label">Gender</label>
+                    <select id="gender" name="comboGender" class="form-select" aria-label="Default select example">
+                        <option value="none">none</option>
+                        <option value="male">male</option>
+                        <option value="female">female</option>
+                        <option value="other">other</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label for="proof" class="form-label">Id Proof</label>
+                    <select id="proof" name="comboIDproof" class="form-select" aria-label="Default select example">
+                        <option value="none">none</option>
+                        <option value="Aadhar card">Aadhar card</option>
+                        <option value="Driving licence">Driving licence</option>
+                        <option value="Voter Id">Voter Id</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="idpic" class="form-label">Upload proof Pic</label>
+                    <input type="file" onchange="doPrev(this,imgPrev);" class="form-control" accept="image/*"
+                        name="proofpic" id="idpic">
+                </div>
+                <div class="col-md-3">
+                    <img src="" id="imgPrev" width="200px" height="200px">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="offset-md-4 col-md-8">
+                    <button type="submit" class="btn btn-primary" formaction="/submit-process">
+                        Submit
+                    </button>
+                    &nbsp;
+                    <button type="submit" class="btn btn-primary" formaction="/update-process" id="btnUpdate" name="btnUpdate">
+                        Update
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

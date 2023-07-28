@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function()
+        {
+          $("#txtEmail").blur(function()
+            {
+
+                var r=/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/   ;
+                var email=$("#txtEmail").val();
+               if(r.test(email)==true)
+                    {
+                        $("#errEmail").html("OK");
+                        $("#errEmail").addClass("sokhay").removeClass("okhay");
+                    }
+                else
+                    {
+                        $("#errEmail").html("Invalid email id").addClass("okhay").removeClass("sokhay");
+
+                    }
+            });
+            //========================================
+            $("#loginEmail").blur(function()
+            {
+              var r=/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/   ;
+                var email=$("#loginEmail").val();
+               if(r.test(email)==true)
+                    {
+                        $("#errLEmail").html("OK");
+                        $("#errLEmail").addClass("sokhay").removeClass("okhay");
+                    }
+                else
+                    {
+                        $("#errLEmail").html("Invalid email id").addClass("okhay").removeClass("sokhay");
+
+                    }
+            })
+            //===============================
+            $("#txtPwd").blur(function()
+            {
+                var r=/(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+                var pwd=$("#txtPwd").val();
+               if(r.test(pwd)==true)
+                    $("#errPwd").html("OK hai").addClass("sokhay").removeClass("okhay");
+                else
+                    $("#errPwd").html("Invalid Password").addClass("okhay").removeClass("sokhay");
+            });
+            //================================
+            $("#loginPwd").blur(function()
+            {
+              var r=/(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+                var pwd=$("#loginPwd").val();
+               if(r.test(pwd)==true)
+                    $("#errLPwd").html("OK hai").addClass("sokhay").removeClass("okhay");
+                else
+                    $("#errLPwd").html("Invalid Password").addClass("okhay").removeClass("sokhay");
+            })
+            //================================
+            $("#btnSignup").click(function()
+            {
+                var emailku=$("#txtEmail").val();
+                var pwdku=$("#txtPwd").val();
+                var typeku=$("#AcntType").val();
+                var objNew={
+                    type:"get",
+                    url:"/create-account",
+                    data:{
+                        kuchEmail:emailku,
+                        kuchPwd:pwdku,
+                        kuchType:typeku
+                    }
+                }
+
+                $.ajax(objNew).done(function(respKuch)
+            {
+                $("#result").html(respKuch);
+            }).fail(function(errKuch)
+            {
+                $("#result").html(errKuch);
+            })
+            })
+            //======================================
+            $("#txtEmail").blur(function()
+            {
+                var emailid=$(this).val();
+                var objChk={
+                    type:"get",
+                    url:"/chk-account",
+                    data:{
+                        EmailAddress:emailid
+                    }
+                }
+
+                $.ajax(objChk).done(function(resp)
+            {
+                $("#check").html(resp);
+            }).fail(function(err)
+            {
+                $("#check").html(err);
+            })
+            })
+            //=================================
+            $("#btnLogin").click(function()
+            {
+               var emaillg=$("#loginEmail").val();
+               var pwdlg=$("#loginPwd").val();
+              //  $("#hdnLGemail").val(emaillg);
+              //  $("#hdnLGpwd").val(pwdlg)
+              //  console.log($("#hdnLGemail").val(emaillg));
+              //  console.log($("#hdnLGpwd").val(pwdlg));
+               var obj={
+                type:"get",
+                url:"/login-process",
+                data:{
+                  LoginEmail:emaillg,
+                  LoginPwd:pwdlg
+                }
+               }
+               $.ajax(obj).done(function(resJson)
+               {
+                localStorage.setItem("activeuser",$("#loginEmail").val());
+                if(resJson=="Donor")
+                {
+                  // alert(JSON.stringify(resJson));
+                  {
+                    // $("#userType").html(resJson[0].type);
+                    location.href="dash-donor.html";
+                  }
+
+                }
+                else if(resJson=="Needy")
+                {
+                  // $("#userType").html(resJson);
+                  location.href="dash-needy.html";
+                }
+                else
+                 $("#userType").html(resJson);
+               }).fail(function(err)
+               {
+                $("#userType").html(err);
+               })
+            })
+        })
+
+    </script>
+    <style>
+      .sokhay
+      {
+          color: green;
+          font-weight: bold;
+          background-color: lightgreen;
+          float: left;
+          padding: 1px 10px 3px 10px;
+          margin-top: 5px;
+      }
+      .okhay
+      {
+          color: red;
+          font-weight: bold;
+          background-color: lightpink;
+          float: left;
+          padding: 1px 10px 3px 10px;
+          margin-top: 5px;
+      }
+   </style>
+  </head>
+  <body>
+    <nav class="navbar sticky-top" style="background-color: #e3f2fd;" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="pics/health-shield-vector-20712667.jpg" alt="Logo" width="60px" height="50px" class="d-inline-block align-text-top">
+            <div class="h2 text-success ms-4 mt-3 fw-semibold" style="display: inline;">HelpRx</div>
+          </a>
+          <form class="d-flex" role="search">
+            <button class="btn btn-outline-success ms-2" type="button" data-bs-toggle="modal" data-bs-target="#signup">Signup</button>
+            <button class="btn btn-outline-success ms-2" type="button" data-bs-toggle="modal" data-bs-target="#login">Login</button>
+          </form>
+        </div>
+      </nav>
+      <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-bs-interval="3000">
+            <img src="pics/banner_Donate.webp" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item" data-bs-interval="3000">
+            <img src="pics/Here-To-Help-Banner.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item" data-bs-interval="3000">
+            <img src="pics/istockphoto-629955000-1024x1024.jpg" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <nav class="navbar" style="background-color: #e3f2fd;">
+        <div class="container">
+          <span class="mb-0 h3 text-center"><p class="text-center mb-1">Our Services</p></span>
+        </div>
+      </nav>
+      <div class="container mt-3">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src="pics/donate-png-pic.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title text-success">Donation</h5>
+                <p class="card-text text-info-emphasis">Help is the kindest action.Your small step towards change can bring a smile on many faces. Through our website you can reach the ones in need.</p>
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src="pics/smiling-woman-volunteer-giving-products-bag-to-beggar-man-charity-homeless-sitting-vagrant-clothes-blanket-patches-187097930.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title text-danger">Needy</h5>
+                <p class="card-text text-warning-emphasis">Many people in the society are deprived of the basic needs of life. We here will provide you with everything you need and try our best to help you.</p>
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src="pics/istockphoto-1211589784-612x612.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title text-info">Terms and conditions</h5>
+                <p class="card-text text-success"><ol class="text-success"><li>The donor and needy must contact each other in case of any discrepancy. We are not responsible for anything.</li><li>In case of any fraud or illegal selling of products the company is not responsible for consequences and if found guilty you will be blocked from our panel.</li></ol></p>
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src="pics/non-profit-organization-concept-icon-vector.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title text-warning">Non-profit organisation</h5>
+                <p class="card-text text-danger">We are a non-profit organisation. We do not aim at gaining anything by selling items to fraud people or illegaly in black market.</p>
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="navbar" style="background-color: #e3f2fd;">
+        <div class="container">
+          <span class="mb-0 h3 text-center"><p class="text-center mb-1">Developed By</p></span>
+        </div>
+      </nav>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <img src="pics/self photo.jpg" class="img-thumbnail" alt="...">
+          </div>
+          <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+              <div class="card-header fw-semibold text-primary">
+                Developed By:
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><span class="text-info h5">Email:</span class="text-danger h5">bansalrehan731@gmail.com</li>
+                <li class="list-group-item"><span class="text-info h5">College:</span class="text-danger h5">Thapar Institute of Engineering and Technology,Patiala</li>
+                <li class="list-group-item"><span class="text-info h5">Branch:</span class="text-danger h5">Computer Engineering</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <img src="pics/rajesh sir pic.jpg" class="img-thumbnail" alt="...">
+          </div>
+          <div class="col-md-3 ">
+            <div class="card" style="width: 18rem;">
+              <div class="card-header fw-semibold text-primary">
+                Under the guidance of:
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><span class="text-info h5">Name:</span>Rajesh Bansal</li>
+                <li class="list-group-item"><span class="text-info h5">Institute:</span>Banglore Computer Education, Bathinda</li>
+                <li class="list-group-item"><span class="text-info h5">Author of:</span>Real Java</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="navbar" style="background-color: #e3f2fd;">
+        <div class="container">
+          <span class="mb-0 h3 text-center"><p class="text-center mb-1">Reach Us</p></span>
+        </div>
+      </nav>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3442.807363990492!2d76.36212627544798!3d30.35642417476801!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391028ab86533db5%3A0x93cc1f72eae1c9a8!2sThapar%20Institute%20of%20Engineering%20%26%20Technology%20(TIET)%2C%20Patiala!5e0!3m2!1sen!2sin!4v1689873240054!5m2!1sen!2sin" width="560" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <div class="col-md-6">
+            <iframe width="600" height="450" src="https://www.youtube.com/embed/zJSY8tbf_ys" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Signup-->
+  <div class="modal fade" id="signup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel" >Signup</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <center>
+          <img src="pics/signup.png" alt="" width="100px" height="100px" style="border-radius: 50%;">
+        </center>
+          <form method="post">
+            <div class="mb-3">
+              <label for="txtEmail" class="form-label">Email ID</label>
+              &nbsp;&nbsp;<span id="check">*</span>
+              <input type="email" class="form-control" id="txtEmail" name="Email" aria-describedby="emailHelp">
+              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+              <p>
+                <div id="errEmail">*</div>
+            </p>
+            </div>
+            <br><br>
+            <div class="mb-3">
+              <label for="txtPwd" class="form-label">Password</label>
+              <input type="password" class="form-control" id="txtPwd" name="Pwd">
+              <p>
+                <span id="errPwd">*</span>
+            </p>
+            </div>
+            <br>
+            <div class="mb-3">
+                <label for="AcntType" class="form-label">Type</label>
+                <select class="form-select" aria-label="Default select example" id="AcntType" name="account">
+                    <option selected>select account type</option>
+                    <option value="Donor">Donor</option>
+                    <option value="Needy">Needy</option>
+                  </select>
+              </div>
+              <div class="mb-3">
+                <span id="result">*</span>
+              </div>
+            <center>
+            <button type="button" class="btn btn-primary" id="btnSignup">Signup</button>
+        </center>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+ <!-- Modal Login-->
+  <div class="modal fade" id="login" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form >
+            <div class="mb-3">
+              <label for="loginEmail" class="form-label">Email address</label>
+              <!-- <input type="hidden" name="hdnLGemail" id="hdnLGemail"> -->
+              <input type="email" class="form-control" id="loginEmail" name="loginEmail" aria-describedby="emailHelp">
+              <span id="errLEmail">*</span>
+              <br><br>
+              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+              <!-- <input type="hidden" name="hdnLGpwd" id="hdnLGpwd"> -->
+              <label for="loginPwd" class="form-label">Password</label>
+              <input type="password" class="form-control" id="loginPwd" name="loginPwd">
+              <span id="errLPwd">*</span>
+              <br>
+            </div>
+            <div class="mb-3"><span id="userType">User Type:</span></div>
+            <center>
+            <button type="button" class="btn btn-primary" id="btnLogin">Login</button>
+          </center>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

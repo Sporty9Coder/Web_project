@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script/angular.min.js"></script>
+    <title>Document</title>
+    <script>
+        var module=angular.module("myModule",[]);
+        module.controller("myController",function($scope)
+        {
+            $scope.cpp;
+            $scope.java;
+            $scope.web;
+            $scope.total;
+            $scope.per;
+            $scope.res;
+            $scope.doTotal=function()
+            {
+                $scope.total=parseFloat($scope.cpp)+parseFloat($scope.java)+parseFloat($scope.web);
+            }
+            $scope.doPer=function()
+            {
+                $scope.per=$scope.total*100/300;
+            }
+            $scope.doRes=function()
+            {
+                if($scope.per<50)
+                $scope.res="fail";
+                else $scope.res="pass";
+            }
+        })
+    </script>
+</head>
+<body ng-app="myModule" ng-controller="myController">
+    <center>
+        <h1>Angular MarksCard</h1>
+    cpp&nbsp;<input type="text" ng-model="cpp">
+    <br><br>
+    java&nbsp;<input type="text" ng-model="java">
+    <br><br>
+    web&nbsp;<input type="text" ng-model="web">
+    <hr><br>
+    <input type="button" value="total" ng-click="doTotal();">
+    <input type="button" value="percent" ng-click="doPer();">
+    <input type="button" value="result" ng-click="doRes();">
+    <br><br>
+    Total&nbsp;<input type="text" ng-model="total">
+    <br><br>
+    Percentage&nbsp;<input type="text" ng-model="per">
+    <br><br>
+    Result&nbsp;<input type="text" ng-model="res">
+    <br><br>
+    </center>
+</body>
+</html>

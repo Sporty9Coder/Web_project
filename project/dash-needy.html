@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function()
+      {
+        function setActiveUser()
+      {
+        if(localStorage.getItem("activeuser")==null)
+        {
+          // alert(localStorage.getItem("activeuser"));
+          location.replace("index.html");
+          return;
+        }
+        var au=localStorage.getItem("activeuser");
+        // alert(au);
+        $("#spanWelcome").html(au);
+      }
+      setActiveUser();
+      //===========================
+      $("#btnLogout").click(function()
+      {
+        localStorage.removeItem("activeuser");
+        localStorage.clear();
+        location.href="index.html";
+      })
+      })
+    </script>
+  </head>
+  <body>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand"><h1>Welcome:&nbsp;<span id="spanWelcome"></span></h1></a>
+        </div>
+      </nav>
+      <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="pics/pngtree-business-people-avatar-icon-user-profile-free-vector-png-image_4815126.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">Details</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="/needy-profile-process" class="btn btn-primary">Details</a>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="pics/medicine-clipart-pharmasist.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">Find Medicine</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="/needy-findmed-process" class="btn btn-primary">Find Medicine</a>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="pics/istockphoto-547202582-612x612.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">Logout</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a class="btn btn-primary" id="btnLogout">Logout</a>
+                    </div>
+                  </div>
+            </div>
+            </div>
+        </div>
+      </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

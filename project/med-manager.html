@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="script/angular.min.js"></script>
+    <script>
+        var module=angular.module("myModule",[]);
+        module.controller("myController",function($scope,$http)
+        {
+            $scope.emailID=localStorage.getItem("activeuser");
+            $scope.JsonMedArray;
+            $scope.getRecords=function()
+            {
+                var url="/get-records-process?emailkuch="+$scope.emailID;
+                $http.get(url).then(done,fail);
+                function done(response)
+                {
+                    // alert($scope.emailID);
+                    // alert(JSON.stringify(response.data));
+                    $scope.JsonMedArray=response.data;
+                }
+                function fail(response)
+                {
+                    alert(response.data);
+                }
+            }
+            $scope.doDelete=function(S_NO)
+            {
+                if(confirm("Are you sure you want to delete this medicine?")==false)
+                {
+                    return;
+                }
+                var url="/delete-med-process?serialKuch="+S_NO;
+                $http.get(url).then(done,fail);
+                function done(response)
+                {
+                    alert(response.data);
+                    $scope.getRecords();
+                }
+                function fail(response)
+                {
+                    alert(response.data);
+                }
+            }
+        })
+    </script>
+  </head>
+  <body ng-app="myModule" ng-controller="myController">
+    <nav class="navbar " style="background-color: #e3f2fd;" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="pics/health-shield-vector-20712667.jpg" alt="Logo" width="60px" height="50px" class="d-inline-block align-text-top">
+            <div class="h3 text-success ms-4 mt-3 fw-semibold" style="display: inline;">HelpRx</div>
+          </a>
+        </div>
+      </nav>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-3 text-end">
+                <label for="txtEmail" class="form-label">Email ID:</label>
+            </div>
+            <div class="col-md-6">
+                <input type="email" readonly ng-model="emailID" class="form-control" aria-describedby="emailHelp">
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-outline-danger form-control" ng-click="getRecords();">Get Records</button>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-3">
+        <table class="table table-dark table-striped table-hover table-bordered">
+        <tr align="center">
+            <th>S.No</th>
+            <th>Email</th>
+            <th>Med name</th>
+            <th>ExpDate</th>
+            <th>Packing</th>
+            <th>Quantity</th>
+            <th>Operations</th>
+        </tr>
+        <tr ng-repeat="obj in JsonMedArray" align="center">
+            <td>{{$index+1}}</td>
+            <td>{{obj.email}}</td>
+            <td>{{obj.med}}</td>
+            <td>{{obj.expdate}}</td>
+            <td>{{obj.packing}}</td>
+            <td>{{obj.qty}}</td>
+            <td>
+                <button class="btn btn-primary" type="button" ng-click="doDelete(obj.srno);">Delete</button>
+            </td>
+        </tr>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

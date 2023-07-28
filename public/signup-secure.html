@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="style/signup.css">
+    <script>
+      function doPrev(refFile,prevImg)
+      {
+          const [file] = refFile.files
+          if (file) {
+            prevImg.src = URL.createObjectURL(file)
+          }
+      }
+  </script>
+  </head>
+  <!-- <style>
+    body{
+        color:brown;
+    }
+  </style> -->
+  <body >
+    <!-- <link rel="stylesheet" href="sign_up.css"> -->
+<center>
+    <form method="post" action="/signup-process-secure" enctype="multipart/form-data" style="width:30%;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                   <h2>Signup Secure</h2>
+                </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" name="txtEmail" aria-describedby="emailHelp" value="rgb@gmail.com">
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" name="txtPwd" value="bcebti.jkl">
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+    </div>
+</div>
+<div class="form-check">
+    <input class="form-check-input" type="checkbox" value="B.tech" name="qualb">
+    <label class="form-check-label" for="flexCheckDefault">
+      B.tech
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="M.tech" name="qualm" checked>
+    <label class="form-check-label" for="flexCheckChecked">
+      M.tech
+    </label>
+  </div>
+  <br>
+  <div class="container">
+    <div class="row">
+  <div class="form-check col-md-6" >
+    <input class="form-check-input" type="radio" name="nationality" id="flexRadioDefault1" value="Indian" checked>
+    <label class="form-check-label" for="flexRadioDefault1">
+      Indian
+    </label>
+  </div>
+  <div class="form-check col-md-6" >
+    <input class="form-check-input" type="radio" name="nationality" value="NRI" id="flexRadioDefault2" >
+    <label class="form-check-label" for="flexRadioDefault2">
+      NRI
+    </label>
+  </div>
+  </div>
+  </div>
+  <br>
+  <input type="file" name="nppic" id="ippic" accept="image/*" onchange="doPrev(this,imgPrev);">
+  <img src="" alt="" id="imgPrev" width="100" height="100" >
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6"></div>
+    
+  <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="city">
+    <option selected>Open this select menu</option>
+    <option value="bti">bti</option>
+    <option value="delhi">Delhi</option>
+    <option value="goa">goa</option>
+  </select>
+</div>
+</div>
+<br>
+<select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="cities" size="4" multiple>
+  <option selected>Open this select menu</option>
+  <option value="bti">bti</option>
+  <option value="delhi">Delhi</option>
+  <option value="goa">goa</option>
+</select>
+
+       <button type="submit" class="btn btn-primary">Submit</button>
+      </form> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </center>
+  </body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () 
+    {
+      function setActiveUser()
+      {
+        var au=localStorage.getItem("activeuser");
+        // alert(au);
+        $("#spanWelcome").html(au);
+        $("#txtEmail").val(au);
+      }
+      setActiveUser();
+      //===================================
+      $("#btnUpdate").click(function () 
+      {
+        if ($("#txtOldpwd").val() != $("#txtNewpwd").val()) 
+        {
+          // alert("checked 1");
+          if ($("#txtNewpwd").val() == $("#txtConpwd").val()) 
+          {
+            // alert("checked 2");
+            var emailku = $("#txtEmail").val();
+            var newpwdku = $("#txtConpwd").val();
+            var oldpwdku=$("#txtOldpwd").val();
+            var obj = {
+              type: "get",
+              url: "/donor-settings-process",
+              data: {
+                kuchEmail: emailku,
+                kuchNewpwd: newpwdku,
+                kuchOldpwd: oldpwdku
+              }
+            }
+            $.ajax(obj).done(function (respKuch) {
+              // alert(respKuch);
+              $("#res").html(respKuch);
+            }).fail(function (err) {
+              $("#res").html(err);
+            })
+          }
+          else $("#res").html("confirm password does not match new password");
+        }
+        else $("#res").html("old and new password cannot be same");
+      })
+    })
+  </script>
+</head>
+
+<body>
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand"><h1>Welcome:&nbsp;<span id="spanWelcome"></span></h1></a>
+      <form class="d-flex" role="search">
+        <button class="btn btn-outline-success" type="submit">Logout</button>
+      </form>
+    </div>
+  </nav>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card" style="width: 18rem;">
+          <img src="pics/man-profile-cartoon-smiling-vector-illustration-graphic-design-135443492.webp"
+            class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Profile</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+              content.</p>
+            <a href="/donor-profile-process" class="btn btn-primary">Profile</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card" style="width: 18rem;">
+          <img src="pics/medicine-clipart-pharmasist.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Avail Medicine</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+              content.</p>
+            <a href="/donor-availmed-process" class="btn btn-primary">Avail Medicine</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card" style="width: 18rem;">
+          <img src="pics/healthcare-clipart-healthcare-management-8.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Medicine Management</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+              content.</p>
+            <a href="/donor-medicmanage-process" class="btn btn-primary">Medicine Management</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card" style="width: 18rem;">
+          <img src="pics/226481.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Settings</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+              content.</p>
+            <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#settings">Settings</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="settings" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Settings</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row mt-2">
+              <div class="col-md-12">
+                <label for="txtEmail" class="form-label">Email address</label>
+                <input type="email" readonly class="form-control" id="txtEmail" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-12">
+                <label for="txtOldpwd" class="form-label">Old Password</label>
+                <input type="password" class="form-control" id="txtOldpwd">
+
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-12">
+                <label for="txtNewpwd" class="form-label">New Password</label>
+                <input type="password" class="form-control" id="txtNewpwd">
+
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-12">
+                <label for="txtConpwd" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="txtConpwd">
+
+              </div>
+            </div>
+            <div><span id="res">*</span></div>
+            <br>
+            <center>
+              <button type="button" class="btn btn-primary" id="btnUpdate">Update</button>
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
