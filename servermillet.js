@@ -8,7 +8,7 @@ var dbConfig={
     host:"127.0.0.1",
     user:"root",
     password:"MySqL@bCe#BTI$2023-NodeJS",
-    database:"",
+    database:"milletmore",
     dateStrings:true
 }
 var dbCon=mysql.createConnection(dbConfig);
