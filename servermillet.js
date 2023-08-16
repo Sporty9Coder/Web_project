@@ -35,3 +35,33 @@ app.get("/",function(req,resp)
 {
     resp.sendFile(process.cwd()+"/millmoret/index.html");
 })
+
+app.get("/send-to-cart",function(req,resp)
+{
+    var name=req.query.namekuch;
+    var price=req.query.pricekuch;
+    var qty=req.query.qtykuch;
+    var pic=req.query.pickuch;
+    dbCon.query("insert into products values(?,?,?,?)",[name,price,qty,pic],function(err)
+    {
+        if(err==null)
+        {
+            resp.send("Item added to cart");
+        }
+        else resp.send(err);
+    })
+})
+
+app.get("/get-cart-items",function(req,resp)
+{
+    dbCon.query("select * from products",function(err,resJSONTable)
+    {
+        if(err==null)
+        {
+            if(resJSONTable.length!=0)
+            resp.send(resJSONTable);
+            else resp.send("Empty Cart");
+        }
+        else resp.send(err);
+    })
+})

@@ -25,15 +25,43 @@
      var module=angular.module("myModule",[]);
         module.controller("myController",function($scope,$http)
         {
-          $scope.pic=[];
+          $scope.pic=["3ba9043f63f5a9626997a573126f6147.jpeg","6a6223fa-82fa-47b7-a049-e2048f5c0f71.312607e3aabe9dac4e7aa2d6dd7d6da1.webp","40075360_2-manna-millet-foxtail.webp","40075362_2-manna-millet-proso.webp"];
           $scope.name=["KODO MILLET","LITTLE MILLET","FOXTAIL MILLET","PROSO MILLET"];
           $scope.price=["Rs. 70","Rs. 80","Rs. 90","Rs. 100"];
           $scope.qty=[0,0,0,0];
           $scope.SendToCart=function(index)
           {
-            alert($scope.name[index]);
-            alert($scope.price[index]);
-            alert($scope.qty[index]);
+            // alert($scope.pic[index]);
+            // alert($scope.name[index]);
+            // alert($scope.price[index]);
+            // alert($scope.qty[index]);
+            var url="/send-to-cart?namekuch="+$scope.name[index]+"&pricekuch="+$scope.price[index]+"&qtykuch="+$scope.qty[index]+"&pickuch="+$scope.pic[index];
+            $http.get(url).then(done,fail);
+            function done(response)
+            {
+              alert(JSON.stringify(response.data));
+            }
+            function fail(response)
+            {
+              alert(response.data);
+            }
+          }
+          $scope.getCartItems=function()
+          {
+            var url="/get-cart-items";
+            $http.get(url).then(done,fail);
+            function done(response)
+            {
+              // alert(JSON.stringify(response.data));
+              $scope.cartItemsArray=response.data;
+              // alert($scope.cartItemsArray.length)
+              localStorage.setItem("cartItems",$scope.cartItemsArray);
+                location.href="cart.html";
+            }
+            function fail(response)
+            {
+              alert(response.data);
+            }
           }
         })
   </script>
@@ -54,7 +82,7 @@
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 400px;">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
-      <i class="fa-solid fa-cart-plus fa-2xl"></i>
+      <button style="border: 0;" ng-click="getCartItems();"><i class="fa-solid fa-cart-plus fa-2xl"></i></button>
     </div>
   </nav>
   <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-bs-ride="carousel">
@@ -238,7 +266,6 @@
   </div>
  </div>
  
-
 
 
 
