@@ -60,7 +60,10 @@ app.get("/get-cart-items",function(req,resp)
         {
             if(resJSONTable.length!=0)
             resp.send(resJSONTable);
-            else resp.send("Empty Cart");
+            else {
+                // resp.sendFile("/millmoret/empty-cart.html");
+                resp.send(resJSONTable);
+            }
         }
         else resp.send(err);
     })

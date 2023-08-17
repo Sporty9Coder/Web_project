@@ -11,11 +11,38 @@
       var module=angular.module("myModule",[]);
         module.controller("myController",function($scope,$http)
         {
-          $scope.cartItemsArray=localStorage.getItem("cartItems");
+          $scope.quant;
+          $scope.ShowItems=function()
+          {
+            $scope.cartItemsArray=JSON.parse(localStorage.getItem("cartItems"))
+            // alert(JSON.stringify($scope.cartItemsArray));
+            // alert($scope.cartItemsArray);
+            // alert($scope.cartItemsArray[0]);
+          }
         })
     </script>
   </head>
-  <body ng-app="myModule" ng-controller="myController" >
+  <body ng-app="myModule" ng-controller="myController" ng-init="ShowItems();">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12" ng-repeat="obj in cartItemsArray">
+          <div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="pics/{{obj.pic}}" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{obj.name}}</h5>
+                  <p class="card-text">{{obj.price}}</p>
+                  <p class="card-text"><small class="text-body-secondary">Quantity:&nbsp; <input type="number" ng-model="quant" value="{{obj.qty}}" ng-change="updateQty()"></small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
   </body>
