@@ -66,3 +66,18 @@ app.get("/login-process",function(req,resp)
         else resp.send(err);
     })
 })
+//=================================================
+app.get("/get-records-process",function(req,resp)
+{
+    var type="Teacher"
+    dbCon.query("select email,dos,status from clients where type=?",[type],function(err,resultJson)
+    {
+        // console.log(req.query.emailkuch);
+        // console.log(resultJson);
+        if(err==null)
+        {
+            resp.send(resultJson);
+        }
+        else resp.send(err);
+    })
+})

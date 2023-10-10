@@ -10,7 +10,19 @@
         var module=angular.module("myModule",[]);
       module.controller("myController",function($scope,$http)
       {
-        
+        $scope.getTeachers=function()
+        {
+            var url="/get-teachers";
+            $http.get(url).then(done,fail);
+            function done(response)
+            {
+                $scope.JSONteachersArray=response.data;
+            }
+            function fail(response)
+            {
+                alert(response.data);
+            }
+        }
       })
     </script>
   </head>
@@ -24,9 +36,27 @@
         <div class="mt-5">
             <button type="button" class="btn btn-success btn-lg" ng-click="getTeachers();">Show Teachers</button>
             <br><br><br><br>
-
+            <div class="container mt-3">
+                <table class="table table-dark table-striped table-hover table-bordered">
+                <tr align="center">
+                    <th>S.No</th>
+                    <th>Email</th>
+                    <th>Date of signUp</th>
+                    <th>Status</th>
+                </tr>
+                <tr ng-repeat="obj in JSONteachersArray" align="center">
+                    <td>{{$index+1}}</td>
+                    <td>{{obj.email}}</td>
+                    <td>{{obj.dos}}</td>
+                    <td>{{obj.status}}</td>
+                    <td>
+                        <button class="btn btn-primary" type="button" ng-click="doBlock(obj.email);">Block</button>
+                    </td>
+                </tr>
+                </table>
             <button type="button" class="btn btn-danger btn-lg" ng-click="getStudents();">Show Students</button>
           </div>
+
     </center>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
