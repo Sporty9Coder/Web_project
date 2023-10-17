@@ -1,3 +1,4 @@
+const e = require("express");
 var express=require("express");
 var fileuploader=require("express-fileupload");
 var mysql=require("mysql2");
@@ -67,16 +68,57 @@ app.get("/login-process",function(req,resp)
     })
 })
 //=================================================
-app.get("/get-records-process",function(req,resp)
+app.get("/get-teachers",function(req,resp)
 {
     var type="Teacher"
-    dbCon.query("select email,dos,status from clients where type=?",[type],function(err,resultJson)
+    dbCon.query("select email,dos,status,type from clients where type=?",[type],function(err,resultJson)
     {
-        // console.log(req.query.emailkuch);
+        // console.log(type);
         // console.log(resultJson);
         if(err==null)
         {
             resp.send(resultJson);
+        }
+        else resp.send(err);
+    })
+})
+//===================================================
+app.get("/get-students",function(req,resp)
+{
+    var type="Student"
+    dbCon.query("select email,dos,status,type from clients where type=?",[type],function(err,resultJson)
+    {
+        // console.log(type);
+        // console.log(resultJson);
+        if(err==null)
+        {
+            resp.send(resultJson);
+        }
+        else resp.send(err);
+    })
+})
+//==================================================
+app.get("/block-user",function(req,resp)
+{
+    var email=req.query.emailkuch;
+    dbCon.query("update clients set status=0 where email=?",[email],function(err,result)
+    {
+        if(err==null)
+        {
+            resp.send("user Blocked");
+        }
+        else resp.send(err);
+    })
+})
+//==================================================
+app.get("/unblock-user",function(req,resp)
+{
+    var email=req.query.emailkuch;
+    dbCon.query("update clients set status=1 where email=?",[email],function(err,result)
+    {
+        if(err==null)
+        {
+            resp.send("user Blocked");
         }
         else resp.send(err);
     })
