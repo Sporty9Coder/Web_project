@@ -100,15 +100,23 @@
         ///===============================================
         $scope.addQues=function()
         {
-            var url="/add-question?typekuch="+$scope.qtype+"&statekuch="+$scope.qstatement+"&opt1kuch="+$scope.qopt1+"&opt2kuch="+$scope.qopt2+"&opt3kuch="+$scope.qopt3+"&opt4kuch="+$scope.qopt4;
-            $http.get(url).then(done,fail)
-            function done(response)
+            if($scope.type!=null)
             {
-                alert(response.data);
+                var url="/add-question?typekuch="+$scope.qtype+"&statekuch="+$scope.qstatement+"&opt1kuch="+$scope.qopt1+"&opt2kuch="+$scope.qopt2+"&opt3kuch="+$scope.qopt3+"&opt4kuch="+$scope.qopt4;
+                $http.get(url).then(done,fail)
+                function done(response)
+                {
+                    alert(response.data);
+                }
+                function fail(response)
+                {
+                    alert(response.data);
+                }
             }
-            function fail(response)
+            else 
             {
-                alert(response.data);
+                alert("select type");
+                return;
             }
         }
       })
