@@ -123,3 +123,47 @@ app.get("/unblock-user",function(req,resp)
         else resp.send(err);
     })
 })
+//==================================================
+app.get("/add-question",function(req,resp)
+{
+    var type=req.query.typekuch;
+    var ques=req.query.statekuch;
+    var opt1=req.query.opt1kuch;
+    var opt2=req.query.opt2kuch;
+    var opt3=req.query.opt3kuch;
+    var opt4=req.query.opt4kuch;
+    
+    if(type=="easy")
+    {
+        dbCon.query("insert into easy (ques,opt1,opt2,opt3,opt4) values (?,?,?,?,?)",[ques,opt1,opt2,opt3,opt4],function(err,result)
+        {
+            if (err==null)
+            {
+                resp.send("question added in easy");
+            }
+            else resp.send(err);
+        })
+    }
+    if(type=="medium")
+    {
+        dbCon.query("insert into medium (ques,opt1,opt2,opt3,opt4) values (?,?,?,?,?)",[ques,opt1,opt2,opt3,opt4],function(err,result)
+        {
+            if (err==null)
+            {
+                resp.send("question added in medium");
+            }
+            else resp.send(err);
+        })
+    }
+    if(type=="hard")
+    {
+        dbCon.query("insert into hard (ques,opt1,opt2,opt3,opt4) values (?,?,?,?,?)",[ques,opt1,opt2,opt3,opt4],function(err,result)
+        {
+            if (err==null)
+            {
+                resp.send("question added in hard");
+            }
+            else resp.send(err);
+        })
+    }
+})
