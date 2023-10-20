@@ -10,6 +10,12 @@
         var module=angular.module("myModule",[]);
       module.controller("myController",function($scope,$http)
       {
+        $scope.qtype="select question type";
+        $scope.qstatement;
+        $scope.qopt1;
+        $scope.qopt2;
+        $scope.qopt3;
+        $scope.qopt4;
         $scope.getTeachers=function()
         {
             var url="/get-teachers";
@@ -91,6 +97,11 @@
                 alert(response.data);
             }
         }
+        ///===============================================
+        $scope.addQues=function(type)
+        {
+            
+        }
       })
     </script>
   </head>
@@ -163,7 +174,65 @@
                 </tr>
                 </table>
           </div>
-
+          <br><br>
+          <button type="button" class="btn btn-primary btn-lg" ng-click="addQues($scope.qtype);">Add question</button>
+          <div class="container mt-4">  
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>type of question to be added: </h4>
+                </div>
+                <div class="col-md-6">
+                    <select class="form-select" aria-label="Default select example" ng-model="qtype">
+                        <option selected>select question type</option>
+                        <option value="easy">easy</option>
+                        <option value="medium">medium</option>
+                        <option value="hard">hard</option>
+                      </select>
+                </div>
+            </div>
+          </div>
+          <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>question:</h4>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <input type="text" ng-model="qstatement" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                      </div>
+                </div>
+            </div>
+          </div>
+          <br><h4>options:</h4> <br>
+          <div class="container mt-2">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">1</span>
+                        <input type="text" ng-model="qopt1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                      </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">2</span>
+                        <input type="text" ng-model="qopt2" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                      </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">3</span>
+                        <input type="text" ng-model="qopt3" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                      </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">4</span>
+                        <input type="text" ng-model="qopt4" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                      </div>
+                </div>
+            </div>
+          </div>
+          <br><br><br><br><br><br><br><br><br>
     </center>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
