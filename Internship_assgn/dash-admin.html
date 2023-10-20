@@ -100,7 +100,8 @@
         ///===============================================
         $scope.addQues=function()
         {
-            if($scope.type!=null)
+            // alert($scope.qtype);
+            if($scope.qtype!="select question type")
             {
                 var url="/add-question?typekuch="+$scope.qtype+"&statekuch="+$scope.qstatement+"&opt1kuch="+$scope.qopt1+"&opt2kuch="+$scope.qopt2+"&opt3kuch="+$scope.qopt3+"&opt4kuch="+$scope.qopt4;
                 $http.get(url).then(done,fail)
