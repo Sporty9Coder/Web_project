@@ -167,3 +167,41 @@ app.get("/add-question",function(req,resp)
         })
     }
 })
+app.get("/get-questions",function(req,resp)
+{
+    var questionArray=[0,0,0];
+    dbCon.query("select * from easy",function(err,resultJson)
+    {
+        if(err==null)
+        {
+            // console.log(resultJson);
+            questionArray[0]=resultJson;
+            // console.log(questionArray);
+        }
+        else resp.send(err);
+    })
+    dbCon.query("select * from medium",function(err,resultJson)
+    {
+        if(err==null)
+        {
+            // console.log(resultJson);
+            questionArray[1]=resultJson;
+            // console.log(questionArray);
+        }
+        else resp.send(err);
+    })
+    dbCon.query("select * from hard",function(err,resultJson)
+    {
+        if(err==null)
+        {
+            // console.log(resultJson);
+            questionArray[2]=resultJson;
+            // console.log(questionArray);
+            resp.send(questionArray);
+            // console.log(questionArray);
+        }
+        else resp.send(err);
+    })
+    // console.log(questionArray);
+    // resp.send(questionArray);
+})
