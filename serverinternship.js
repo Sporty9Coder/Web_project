@@ -196,7 +196,7 @@ app.get("/get-questions",function(req,resp)
         {
             // console.log(resultJson);
             questionArray[2]=resultJson;
-            // console.log(questionArray);
+            console.log(questionArray);
             resp.send(questionArray);
             // console.log(questionArray);
         }
