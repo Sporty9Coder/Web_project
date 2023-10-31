@@ -34,10 +34,6 @@
         }
         $scope.addExams=function()
         {
-            alert($scope.txtTopic);
-            alert($scope.doe);
-            alert($scope.Starttime);
-            alert($scope.Endtime);
             var url="/add-exams-angular?topickuch="+$scope.txtTopic+"&datekuch="+$scope.doe+"&startkuch="+$scope.Starttime+"&endkuch="+$scope.Endtime;
             $http.get(url).then(done,fail);
             function done(response)

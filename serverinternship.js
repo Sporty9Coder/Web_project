@@ -207,13 +207,29 @@ app.get("/get-questions",function(req,resp)
 app.get("/add-exams-angular",function(req,resp)
 {
     var topic=req.query.topickuch;
-    var doe=req.query.datekuch;
-    var starttime=req.query.startkuch;
-    var endtime=req.query.endkuch;
-    console.log(topic);
-    console.log(doe);
-    console.log(starttime);
-    console.log(endtime);
+
+    // Date (Javascript to MySQL format)
+    var jsDate=new Date(req.query.datekuch);
+    const year = jsDate.getFullYear();
+    const month = String(jsDate.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const day = String(jsDate.getDate()).padStart(2, '0');
+
+    var doe=`${year}-${month}-${day}`;
+
+    // Time (Javascript to MySQL format)
+    var jsstarttime = new Date(req.query.startkuch);
+    const shour = String(jsstarttime.getHours()).padStart(2, '0');
+    const smin = String(jsstarttime.getMinutes()).padStart(2, '0');
+    const ssec = String(jsstarttime.getSeconds()).padStart(2, '0');
+
+    var jsendtime = new Date(req.query.endkuch);
+    const ehour = String(jsendtime.getHours()).padStart(2, '0');
+    const emin = String(jsendtime.getMinutes()).padStart(2, '0');
+    const esec = String(jsendtime.getSeconds()).padStart(2, '0');
+
+    var starttime = `${shour}:${smin}:${ssec}`;
+    var endtime = `${ehour}:${emin}:${esec}`;
+    
     dbCon.query("insert into exams (topic,doe,starttime,endtime) values(?,?,?,?)",[topic,doe,starttime,endtime],function(err,result)
     {
         if(err==null)
