@@ -202,6 +202,24 @@ app.get("/get-questions",function(req,resp)
         }
         else resp.send(err);
     })
-    // console.log(questionArray);
-    // resp.send(questionArray);
+})
+//============================================
+app.get("/add-exams-angular",function(req,resp)
+{
+    var topic=req.query.topickuch;
+    var doe=req.query.datekuch;
+    var starttime=req.query.startkuch;
+    var endtime=req.query.endkuch;
+    console.log(topic);
+    console.log(doe);
+    console.log(starttime);
+    console.log(endtime);
+    dbCon.query("insert into exams (topic,doe,starttime,endtime) values(?,?,?,?)",[topic,doe,starttime,endtime],function(err,result)
+    {
+        if(err==null)
+        {
+            resp.send("Exam added");
+        }
+        else resp.send(err);
+    })
 })
