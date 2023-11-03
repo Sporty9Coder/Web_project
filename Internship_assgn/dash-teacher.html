@@ -17,6 +17,7 @@
         $scope.selectedQuestionEasy={};
         $scope.selectedQuestionMedium={};
         $scope.selectedQuestionHard={};
+        //==========================================================
         $scope.getQuestions=function()
         {
             // alert("hello");
@@ -32,6 +33,7 @@
                 alert(response.data);
             }
         }
+        //==========================================================
         $scope.addExams=function()
         {
             var url="/add-exams-angular?topickuch="+$scope.txtTopic+"&datekuch="+$scope.doe+"&startkuch="+$scope.Starttime+"&endkuch="+$scope.Endtime;
@@ -44,6 +46,28 @@
             {
                 alert(response.data);
             }
+        }
+        //==========================================================
+        $scope.getExams=function()
+        {
+            var url="/get-exams-angular";
+            $http.get(url).then(done,fail);
+            function done(response)
+            {
+                alert(JSON.stringify(response.data));
+                $scope.examsJSONarray=response.data;
+            }
+            function fail(response)
+            {
+                alert(response.data);
+            }
+        }
+        //==========================================================
+        $scope.getexamID=function(eID)
+        {
+            alert(eID);
+            $scope.updateexamArray=angular.copy($scope.examsJSONarray[eID-1]);
+            alert(JSON.stringify($scope.updateexamArray));
         }
       })
     </script>
@@ -58,7 +82,7 @@
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addExam">Add</button>
                 </div>
                 <div class="col-md-4">
-                    <button type="button" class="btn btn-warning">Update</button>
+                    <button type="button" class="btn btn-warning" ng-click="getExams();">Update</button>
                 </div>
                 <div class="col-md-4">
                     <button type="button" class="btn btn-dark">Remove</button>
@@ -66,6 +90,30 @@
             </div>
         </div>
         <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-dark table-striped-columns table-hover">
+                        <tr align="center">
+                           <th>Id</th>
+                           <th>Topic</th>
+                           <th>Date of Exam</th>
+                           <th>Start time</th>
+                           <th>End time</th> 
+                           <th>Operation</th>
+                        </tr>
+                        <tr ng-repeat="obj in examsJSONarray" align="center">
+                            <td>{{obj.srno}}</td>
+                            <td>{{obj.topic}}</td>
+                            <td>{{obj.doe}}</td>
+                            <td>{{obj.starttime}}</td>
+                            <td>{{obj.endtime}}</td>
+                            <td><button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#updateExam" ng-click="getexamID(obj.srno);">Update</button></td>
+                        </tr>
+                      </table>
+                </div>
+            </div>
+        </div>
         <button type="button" class="btn btn-outline-success btn-lg" ng-click="getQuestions();">Select questions</button>
         <div class="container mt-3">
             <div class="row">
@@ -176,6 +224,74 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ng-click="addExams();">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Modal  Update  Exam-->
+  <div class="modal fade" id="updateExam" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Exam</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="container mt-2">
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <h4>Topic of Exam:</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" value="{{updateexamArray.topic}}" class="form-control" ng-model="txtTopic" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <h4>Date of exam:</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="date" value="{{updateexamArray.doe}}" class="form-control" ng-model="doe" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <h4>Start Time of Exam:</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="time" value="{{updateexamArray.starttime}}" class="form-control" ng-model="Starttime" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <h4>End time of exam:</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="time" value="{{updateexamArray.endtime}}" class="form-control" ng-model="Endtime" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ng-click="updateExams();">Update</button>
         </div>
       </div>
     </div>

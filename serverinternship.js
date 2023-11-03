@@ -239,3 +239,15 @@ app.get("/add-exams-angular",function(req,resp)
         else resp.send(err);
     })
 })
+//=========================================================
+app.get("/get-exams-angular",function(req,resp)
+{
+    dbCon.query("select * from exams",function(err,resultJson)
+    {
+        if(err==null)
+        {
+            resp.send(resultJson);
+        }
+        else resp.send(err);
+    })
+})
