@@ -14,6 +14,10 @@
         $scope.doe;
         $scope.Starttime;
         $scope.Endtime;
+        $scope.utxtTopic;
+        $scope.udoe;
+        $scope.uStarttime;
+        $scope.uEndtime;
         $scope.selectedQuestionEasy={};
         $scope.selectedQuestionMedium={};
         $scope.selectedQuestionHard={};
@@ -54,7 +58,7 @@
             $http.get(url).then(done,fail);
             function done(response)
             {
-                alert(JSON.stringify(response.data));
+                // alert(JSON.stringify(response.data));
                 $scope.examsJSONarray=response.data;
             }
             function fail(response)
@@ -65,9 +69,31 @@
         //==========================================================
         $scope.getexamID=function(eID)
         {
-            alert(eID);
+            // alert(eID);
             $scope.updateexamArray=angular.copy($scope.examsJSONarray[eID-1]);
             alert(JSON.stringify($scope.updateexamArray));
+            $scope.utxtTopic=$scope.updateexamArray.topic;
+            $scope.udoe=$scope.updateexamArray.doe;
+            $scope.uStarttime=$scope.updateexamArray.starttime;
+            $scope.uEndtime=$scope.updateexamArray.endtime;
+            alert($scope.uEndtime);
+            alert($scope.uStarttime);
+            alert($scope.utxtTopic);
+            alert($scope.udoe);
+        }
+        //==========================================================
+        $scope.updateExams=function()
+        {
+            var url="update-exam";
+            $http.post(url,$scope.updateexamArray).then(done,fail);
+            function done(response)
+            {
+                alert(response.data);
+            }
+            function fail(response)
+            {
+                alert(response.data);
+            }
         }
       })
     </script>
@@ -261,7 +287,7 @@
                         <h4>Topic of Exam:</h4>
                     </div>
                     <div class="col-md-6">
-                        <input type="text" value="{{updateexamArray.topic}}" class="form-control" ng-model="txtTopic" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" class="form-control" ng-model="utxtTopic" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -269,7 +295,7 @@
                         <h4>Date of exam:</h4>
                     </div>
                     <div class="col-md-6">
-                        <input type="date" value="{{updateexamArray.doe}}" class="form-control" ng-model="doe" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="date" class="form-control" ng-model="udoe" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -277,7 +303,7 @@
                         <h4>Start Time of Exam:</h4>
                     </div>
                     <div class="col-md-6">
-                        <input type="time" value="{{updateexamArray.starttime}}" class="form-control" ng-model="Starttime" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="time" class="form-control" ng-model="uStarttime" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -285,7 +311,7 @@
                         <h4>End time of exam:</h4>
                     </div>
                     <div class="col-md-6">
-                        <input type="time" value="{{updateexamArray.endtime}}" class="form-control" ng-model="Endtime" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="time" class="form-control" ng-model="uEndtime" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
                 </div>
             </div>

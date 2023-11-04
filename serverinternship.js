@@ -251,3 +251,22 @@ app.get("/get-exams-angular",function(req,resp)
         else resp.send(err);
     })
 })
+//========================================================
+app.post("/update-exam",function(req,resp)
+{
+    var examdataArray=req.body;
+    console.log(examdataArray);
+    var srno=examdataArray.srno;
+    var topic=examdataArray.topic;
+    var doe=examdataArray.doe;
+    var starttime=examdataArray.starttime;
+    var endtime=examdataArray.endtime;
+    dbCon.query("update exams set topic=?,doe=?,starttime=?,endtime=? where srno=?",[topic,doe,starttime,endtime,srno],function(err,result)
+    {
+        if(err==null)
+        {
+            resp.send("exam updated successfully");
+        }
+        else resp.send(err);
+    })
+})

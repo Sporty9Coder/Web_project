@@ -98,6 +98,34 @@
               {
                 location.href="dash-admin.html";
               })
+              //========================================
+              $("#loginEmail").blur(function()
+            {
+
+                var r=/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/   ;
+                var email=$("#loginEmail").val();
+               if(r.test(email)==true)
+                    {
+                        $("#errLEmail").html("OK");
+                        $("#errLEmail").addClass("sokhay").removeClass("okhay");
+                    }
+                else
+                    {
+                        $("#errLEmail").html("Invalid email id").addClass("okhay").removeClass("sokhay");
+
+                    }
+            });
+            //========================================
+            $("#loginPwd").blur(function()
+            {
+                var r=/(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+                var pwd=$("#loginPwd").val();
+               if(r.test(pwd)==true)
+                    $("#errLPwd").html("OK hai").addClass("sokhay").removeClass("okhay");
+                else
+                    $("#errLPwd").html("Invalid Password").addClass("okhay").removeClass("sokhay");
+            });
+            //================================
       })
     </script>
     <style>
