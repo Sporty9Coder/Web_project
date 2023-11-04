@@ -59,7 +59,8 @@
             function done(response)
             {
                 // alert(JSON.stringify(response.data));
-                $scope.examsJSONarray=response.data;
+                $scope.examsJSONarray1=response.data;
+                $scope.examsJSONarray2=response.data;
             }
             function fail(response)
             {
@@ -70,7 +71,7 @@
         $scope.getexamID=function(eID)
         {
             // alert(eID);
-            $scope.updateexamArray=angular.copy($scope.examsJSONarray[eID-1]);
+            $scope.updateexamArray=angular.copy($scope.examsJSONarray1[eID-1]);
             alert(JSON.stringify($scope.updateexamArray));
             $scope.utxtTopic=$scope.updateexamArray.topic;
             $scope.udoe=$scope.updateexamArray.doe;
@@ -128,7 +129,7 @@
                            <th>End time</th> 
                            <th>Operation</th>
                         </tr>
-                        <tr ng-repeat="obj in examsJSONarray" align="center">
+                        <tr ng-repeat="obj in examsJSONarray1" align="center">
                             <td>{{obj.srno}}</td>
                             <td>{{obj.topic}}</td>
                             <td>{{obj.doe}}</td>
@@ -140,7 +141,31 @@
                 </div>
             </div>
         </div>
-        <button type="button" class="btn btn-outline-success btn-lg" ng-click="getQuestions();">Select questions</button>
+        <button type="button" class="btn btn-outline-success btn-lg" ng-click="getExams();getQuestions();">Select questions</button>
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-dark table-striped-columns table-hover">
+                        <tr align="center">
+                           <th>Id</th>
+                           <th>Topic</th>
+                           <th>Date of Exam</th>
+                           <th>Start time</th>
+                           <th>End time</th> 
+                           <th>Operation</th>
+                        </tr>
+                        <tr ng-repeat="obj in examsJSONarray2" align="center">
+                            <td>{{obj.srno}}</td>
+                            <td>{{obj.topic}}</td>
+                            <td>{{obj.doe}}</td>
+                            <td>{{obj.starttime}}</td>
+                            <td>{{obj.endtime}}</td>
+                            <td><button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#updateExam" ng-click="getexamID(obj.srno);">Select Questions</button></td>
+                        </tr>
+                      </table>
+                </div>
+            </div>
+        </div>
         <div class="container mt-3">
             <div class="row">
                 <div class="col-md-6">
