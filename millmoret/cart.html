@@ -12,12 +12,25 @@
         module.controller("myController",function($scope,$http)
         {
           $scope.quant;
+          $scope.txtBill;
           $scope.ShowItems=function()
           {
             $scope.cartItemsArray=JSON.parse(localStorage.getItem("cartItems"))
             // alert(JSON.stringify($scope.cartItemsArray));
             // alert($scope.cartItemsArray);
             // alert($scope.cartItemsArray[0]);
+          }
+          //=====================================================================
+          $scope.calBill=function()
+          {
+            // alert("hello")
+            alert($scope.txtBill);
+            for(i=0;i<$scope.cartItemsArray.length;i++)
+            {
+              alert(JSON.stringify($scope.quant));
+              $scope.txtBill+=parseFloat($scope.cartItemsArray[i].quant);
+            }
+            alert($scope.txtBill);
           }
         })
     </script>
@@ -43,7 +56,11 @@
         </div>
       </div>
     </div>
-
+    <center>
+      <button type="button" class="btn btn-dark" ng-click="calBill();">Total Bill</button>
+      &nbsp;&nbsp;{{txtBill}}
+    </center>
+    <br><br><br>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
   </body>
 </html>
